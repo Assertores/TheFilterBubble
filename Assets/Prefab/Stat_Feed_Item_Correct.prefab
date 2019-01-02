@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   message: {fileID: 1736639296828689245}
+  img: {fileID: 0}
   Frame: {fileID: 7843569746832246392}
   MinSize: 50
   UpperPadding: 10
@@ -137,7 +138,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: ada90fe8f1e08a144976a71a187502ec, type: 3}
     m_FontSize: 25
     m_FontStyle: 0
     m_BestFit: 0
