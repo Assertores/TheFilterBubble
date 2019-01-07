@@ -7,7 +7,7 @@ public class SceenManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //GameManager.IC.WriteToConsole("===== ===== Sceenmanager is ready ===== ===== dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddA");
     }
 
     // Update is called once per frame

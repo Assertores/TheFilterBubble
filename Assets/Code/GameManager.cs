@@ -18,6 +18,7 @@ public class DataFeed {
 public class GameManager : MonoBehaviour {
 
     public static GameManager GM = null;
+    public static IngameConsole IC = null;
 
     [SerializeField] GameObject YouWon;
 
@@ -38,12 +39,15 @@ public class GameManager : MonoBehaviour {
             Destroy(this);
         } else {
             GM = this;
+            IC = FindObjectOfType<IngameConsole>();
         }
 
-
-        AllFeeds = ReadFromFile.LoadFeeds(Application.streamingAssetsPath + "/" + FeedPath);
-        AllFilters = ReadFromFile.LoadFilters(Application.streamingAssetsPath + "/" + FilterPath);
-
+        IC.WriteToConsole("i will load the feeds now");//===== ===== LOG ===== =====
+        AllFeeds = ReadFromFile.LoadFeeds(FeedPath);
+        IC.WriteToConsole("i will load the filters now");//===== ===== LOG ===== =====
+        AllFilters = ReadFromFile.LoadFilters(FilterPath);
+        
+        IC.WriteToConsole("i will restart the game now");//===== ===== LOG ===== =====
         restart();
     }
 
@@ -53,14 +57,23 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    private void Update() {
+        if(Input.GetKeyUp(KeyCode.F5) || Input.acceleration.y * Time.deltaTime > 0.1f) {
+            IC.SetConsoleVisable();
+        }
+    }
+
     public void restart() {
 
-        foreach(var it in GetComponentsInChildren<WindowHandler>()) {
+        IC.WriteToConsole("restart");//===== ===== LOG ===== =====
+
+        foreach (var it in GetComponentsInChildren<WindowHandler>()) {
             it.DeleteWindows();
         }
 
 
         ShuffleAllFilters();
+        IC.WriteToConsole("Filters shuffled");//===== ===== LOG ===== =====
         for (int i = 0; i < StartFilterAmount && i < AllFilters.Count; i++) {
             bool newOne = true;
             for (int j = 0; j < CurrentFilters.Count; j++) {
@@ -68,11 +81,14 @@ public class GameManager : MonoBehaviour {
                     newOne = false;
                 }
             }
-            if (newOne)
+            if (newOne) {
                 CurrentFilters.Add(AllFilters[i]);
+                IC.WriteToConsole("added " + AllFilters[i].mFilters[0] + " to the filters");//===== ===== LOG ===== =====
+            }
         }
 
         ShuffleAllFeeds();
+        IC.WriteToConsole("Feeds shuffled");//===== ===== LOG ===== =====
         YouWon.SetActive(false);
         Time.timeScale = 1;
     }
