@@ -152,6 +152,8 @@ public class GameManager : MonoBehaviour {
             }
         }
 
+        IC.WriteToConsole("the filter serach for " + serach + " returned " + value.ToString() + ". the Active Filter Count is " + CurrentFilters.Count);
+
         return value;
     }
 }

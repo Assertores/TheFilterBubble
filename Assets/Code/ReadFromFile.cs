@@ -20,12 +20,10 @@ public static class ReadFromFile {
             temp.mFilterIDs = new int[LineData.Length - 1];
 
             for(int i = 1; i < LineData.Length; i++) {
-                GameManager.IC.WriteToConsole("beforde int cast " + LineData[i]);//===== ===== LOG ===== =====
                 if(!System.Int32.TryParse(LineData[i], out temp.mFilterIDs[i - 1])) {
-                    GameManager.IC.WriteToConsole("i failed");//===== ===== LOG ===== =====
                     temp.mFilterIDs[i - 1] = 0;
+                    GameManager.IC.WriteToConsole("i failed casting " + LineData[i] + " to an int, so i have set it to " + temp.mFilterIDs[i - 1]);//===== ===== LOG ===== =====
                 }
-                GameManager.IC.WriteToConsole("after int cast " + temp.mFilterIDs[i-1]);//===== ===== LOG ===== =====
             }
 
             value.Add(temp);
@@ -43,12 +41,10 @@ public static class ReadFromFile {
             string[] LineData = it.Trim().Split(";"[0]);
 
             DataFilter temp = new DataFilter();
-            GameManager.IC.WriteToConsole("beforde int cast " + LineData[0]);//===== ===== LOG ===== =====
             if(!System.Int32.TryParse(LineData[0], out temp.mID)) {
-                GameManager.IC.WriteToConsole("i failed");//===== ===== LOG ===== =====
                 temp.mID = 0;
+                GameManager.IC.WriteToConsole("i failed casting " + LineData[0] + " to an int, so i have set it to " + temp.mID);//===== ===== LOG ===== =====
             }
-            GameManager.IC.WriteToConsole("after int cast " + temp.mID);//===== ===== LOG ===== =====
             temp.mFilters = new string[LineData.Length - 1];
 
             for(int i = 1; i < LineData.Length; i++) {
@@ -66,25 +62,11 @@ public static class ReadFromFile {
 
         GameManager.IC.WriteToConsole("reading in " + path);//===== ===== LOG ===== =====
         if (Application.platform == RuntimePlatform.Android) {
-            //GameManager.IC.WriteToConsole("jar:file://" + Application.dataPath + "!/assets/" + path);//===== ===== LOG ===== =====
-            //UnityWebRequest reader = new UnityWebRequest("jar:file://" + Application.dataPath + "!/assets/" + path);
-            //if(reader.isNetworkError || reader.isHttpError) {
-            //    GameManager.IC.WriteToConsole("i had an error: " + reader.error);
-            //    return new string[1] { reader.error };
-            //}
-
-            //string temp = reader.downloadHandler.text;
-            //GameManager.IC.WriteToConsole(temp);//===== ===== LOG ===== =====
-            //FileData = temp.Split(System.Environment.NewLine[0]);
             GameManager.IC.WriteToConsole(Application.streamingAssetsPath + "/" + path);//===== ===== LOG ===== =====
             WWW reader = new WWW(Application.streamingAssetsPath + "/" + path);
-            /*if (reader.error == "") {
-                GameManager.IC.WriteToConsole("i had an error: " + reader.error);
-                return new string[1] { reader.error };
-            }*/
+            while (!reader.isDone);
 
-            string temp = reader.text;
-            FileData = temp.Split(System.Environment.NewLine[0]);
+            FileData = reader.text.Split(System.Environment.NewLine[0]);
 
             reader.Reset();
         } else {
