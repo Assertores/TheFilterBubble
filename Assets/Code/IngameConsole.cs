@@ -35,4 +35,21 @@ public class IngameConsole : MonoBehaviour {
             consoleContent.rectTransform.sizeDelta = new Vector2(consoleContent.rectTransform.sizeDelta.x, consoleContent.preferredHeight);
         }
     }
+
+    public bool InterpretCommand(string value) {
+        value = value.Remove(0, 1);
+        if (value.Contains("ShowConsole") || value.Contains("showConsole")) {
+            SetConsoleVisable(true);
+            return true;
+        }
+        if (value.Contains("HideConsole") || value.Contains("hideConsole")) {
+            SetConsoleVisable(false);
+            return true;
+        }
+        if (value.Contains("Console") || value.Contains("console")) {
+            SetConsoleVisable();
+            return true;
+        }
+        return false;
+    }
 }
