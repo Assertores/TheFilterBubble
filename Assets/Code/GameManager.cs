@@ -57,10 +57,16 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    float lastacceleration = 0;
+    float lastVelocity = 0;
     private void Update() {
-        if(Input.GetKeyUp(KeyCode.F5) || Input.acceleration.y * Time.deltaTime > 0.1f) {
+        float currentVelocity = Input.acceleration.y - lastacceleration / Time.deltaTime;
+        if(Input.GetKeyUp(KeyCode.F5) || ((currentVelocity - lastVelocity)/Time.deltaTime > 1000f && Time.timeSinceLevelLoad > 1f)) {
             IC.SetConsoleVisable();
         }
+        //IC.WriteToConsole(((currentVelocity-lastVelocity)/Time.deltaTime).ToString());//===== ===== LOG ===== =====
+        lastVelocity = currentVelocity;
+        lastacceleration = Input.acceleration.y;
     }
 
     public void restart() {
